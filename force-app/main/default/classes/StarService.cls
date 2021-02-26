@@ -1,4 +1,4 @@
-public with sharing class StarService {
+public without sharing class StarService {
     public static List<Star__c> getStars() {
         List<IntegrationAPI.ItemWrp> items = new List<IntegrationAPI.ItemWrp>();
         IntegrationAPI iAPI = new IntegrationAPI();
@@ -37,6 +37,14 @@ public with sharing class StarService {
             return stars.get(0).Id;
         }
         return null;
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static List<Star__c> getAllStars(){
+        return [
+            SELECT Id, Name, NumberForks__c, NumberStars__c, Login__c, ExternalID__c
+            FROM Star__c
+        ];
     }
 
 }
