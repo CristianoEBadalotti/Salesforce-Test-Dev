@@ -4,7 +4,7 @@ public with sharing class StarService {
         IntegrationAPI iAPI = new IntegrationAPI();
         try {
             items = iAPI.getItems();
-        } catch (Integrationexception e) {
+        } catch (Exception e) {
             
         }
 
@@ -21,6 +21,8 @@ public with sharing class StarService {
         star.Login__c = item.owner.login;
         star.Name = item.name;
         star.ExternalID__c = item.id;
+        star.NumberForks__c = item.forks_count;
+        star.NumberStars__c = item.stargazers_count;
         return star;
     }
 

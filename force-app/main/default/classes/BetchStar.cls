@@ -15,20 +15,7 @@ global class BetchStar implements Schedulable, Database.Batchable<sObject>, Data
             stars.add(star);
         }
 
-        List<Database.UpsertResult> srList = Database.upsert(stars, false);
-
-        for (Database.UpsertResult ur : srList) {
-            if (ur.isSuccess()) {
-                System.debug('Successfully inserted account. Account ID: ' + ur.getId());
-            }
-            else {             
-                for(Database.Error err : ur.getErrors()) {
-                    System.debug('The following error has occurred.');                    
-                    System.debug(err.getStatusCode() + ': ' + err.getMessage());
-                    System.debug('Account fields that affected this error: ' + err.getFields());
-                }
-            }
-        }
+        upsert stars;
     }
 
     global void finish(Database.BatchableContext BC) {

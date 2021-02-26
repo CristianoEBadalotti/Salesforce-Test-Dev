@@ -1,5 +1,5 @@
-trigger TriggerStar on Star__c (before insert, before update) {
-    if (Trigger.isBefore && (Trigger.isInsert || Trigger.isUpdate)) {
-        TriggerStarHandler.completeInfos();
+trigger TriggerStar on Star__c (after insert, after update) {
+    if (Trigger.isAfter && (Trigger.isInsert || Trigger.isUpdate)) {
+       
     }
 }

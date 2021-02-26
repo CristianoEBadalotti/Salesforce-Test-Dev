@@ -24,11 +24,11 @@ public with sharing class IntegrationAPI {
             Http lHttp = new Http();
             lResponse = lHttp.send(request);
             if(lResponse.getStatusCode() >= 300) {
-                throw new IntegrationException(lResponse,null);
+                throw new IntegrationAPIException('Ocorreu um erro na chamada da API!');
             }
             return lResponse;
         } catch(System.CalloutException e) {
-            throw new IntegrationException(null,e);
+            throw e;
         }
     }
 
@@ -39,21 +39,25 @@ public with sharing class IntegrationAPI {
         starWrp returnResponse = (starWrp) JSON.deserialize(
             response.getBody(), starWrp.class
         );
+
         return returnResponse.items;
     }
 
     public class starWrp {
         public List<ItemWrp> items {get; set;}
-        public Integer total_count {get; set;}
     }
 
     public class ItemWrp {
         public String id {get; set;}
         public String name {get; set;}
         public OwnerWrp owner {get; set;}
+        public Integer stargazers_count {get; set;}
+        public Integer forks_count {get; set;}
     }
 
     public class OwnerWrp {
         public String login {get; set;}
     }
+
+    public class IntegrationAPIException extends Exception {}
 }
